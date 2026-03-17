@@ -47,7 +47,7 @@ window.addEventListener('DOMContentLoaded', () => {
 
 
     //timer
-    const deadLine = '2026-02-26';
+    const deadLine = '2026-04-26';
 
 
     function getTime(endtime) {
@@ -96,5 +96,62 @@ window.addEventListener('DOMContentLoaded', () => {
     }
 
     setClock('.timer', deadLine);
+
+
+    //модалка
+    const btnUp = document.querySelectorAll('[data-modal]'),
+          btnDel = document.querySelector('[data-close]'),
+          modal = document.querySelector('.modal');
+
+
+
+    let closeModal = function(){
+        modal.style.display = 'none';
+        document.body.style.overflow = '';
+    }
+
+    let upModal = function(){
+        modal.style.display = 'block';
+        document.body.style.overflow = 'hidden';
+        clearInterval(modalTimer);
+    }
+
+    btnUp.forEach(x => {
+        x.addEventListener('click', () => {
+            upModal();
+
+        })
+    });
+
+    btnDel.addEventListener('click', () => {
+        closeModal();
+    });
+
+    modal.addEventListener('click', (e) => {
+        if (e.target === modal) {
+            closeModal();
+        }
+    })
+
+    document.addEventListener('keydown', (e) => {
+        if (e.code === 'Escape') {
+            closeModal();
+        }
+    });
+
+    const modalTimer = setTimeout(upModal, 10000);
+
+    function showModalByScroll() {
+        if (window.pageYOffset + document.documentElement.clientHeight >= document.documentElement.scrollHeight -1) {
+            upModal();
+            window.removeEventListener('scroll', showModalByScroll)
+            console.log(window.pageYOffset);
+            console.log(document.documentElement.clientHeight);
+        }
+    }
+
+    window.addEventListener('scroll', showModalByScroll);
+
+    
 
 })

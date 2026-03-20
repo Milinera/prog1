@@ -139,7 +139,7 @@ window.addEventListener('DOMContentLoaded', () => {
         }
     });
 
-    const modalTimer = setTimeout(upModal, 10000);
+    const modalTimer = setTimeout(upModal, 100000);
 
     function showModalByScroll() {
         if (window.pageYOffset + document.documentElement.clientHeight >= document.documentElement.scrollHeight -1) {
@@ -152,6 +152,116 @@ window.addEventListener('DOMContentLoaded', () => {
 
     window.addEventListener('scroll', showModalByScroll);
 
+    //class для карточек
+    // class Hz{
+    //     constructor (title, img, descr, price, alt) {
+    //         this.title = title;
+    //         this.img = img;
+    //         this.descr = descr;
+    //         this.price = price;
+    //         this.alt = alt;
+    //     }
+
+    //     createCard() {
+    //         const wrapper = document.createElement('div'),
+    //               img = document.createElement('img'),
+    //               h3 = document.createElement('h3'),
+    //               itemdescr = document.createElement('div'),
+    //               itemdivider = document.createElement('div'),
+    //               itemprice = document.createElement('div'),
+    //               cost = document.createElement('div'),
+    //               total = document.createElement('div'),
+    //               span = document.createElement('span');
+
+
+    //         wrapper.classList.add('menu__item')
+
+    //         img.alt = this.alt;
+    //         img.src = this.img;
+    //         wrapper.append(img)
+            
+    //         h3.classList.add('menu__item-subtitle');
+    //         h3.innerText = this.title;
+    //         wrapper.append(h3)
+
+    //         itemdescr.classList.add('menu__item-descr');
+    //         itemdescr.innerText = this.descr;
+    //         wrapper.append(itemdescr);
+
+    //         itemdivider.classList.add('menu__item-divider');
+    //         wrapper.append(itemdivider);
+
+    //         itemprice.classList.add('menu__item-price');
+    //         cost.classList.add('menu__item-cost');
+    //         cost.innerText = 'Цена:'
+    //         total.classList.add('menu__item-total');
+    //         total.innerText = this.price;
+    //         span.innerText = 'бр/день'
+
+    //         total.append(span);
+
+    //         itemprice.append(total);
+    //         itemprice.append(cost);
+
+    //         wrapper.append(itemprice);
+
+    //         return wrapper
+    //     }
+
+    //     addTo() {
+    //         const mainBlock = document.querySelector('.menu__field'),
+    //               container = mainBlock.querySelector('.container');
+
+    //         container.append(this.createCard());
+    //     }
+    // }
+    
+    // const first = new Hz('Меню "Фитнес"', 'img/tabs/vegy.jpg', 'Меню "Фитнес" - это новый подход к приготовлению блюд: больше свежих овощей и фруктов. Продукт активных и здоровых людей. Это абсолютно новый продукт с оптимальной ценой и высоким качеством!', '229', 'alt');
+    // first.addTo();
+
+
+    class block {
+        constructor(src, alt, title, descr, price, perent) {
+            this.src = src;
+            this.alt = alt;
+            this.title = title;
+            this.descr = descr;
+            this.perent = document.querySelector(perent);
+            this.price = price;
+            this.transfer = 27;
+            this.changeTo();
+        }
+
+        changeTo() {
+            this.price = this.price * this.transfer;
+        }
+
+        render() {
+            const element = document.createElement('div');
+            element.innerHTML = `
+            <div class="menu__item">
+                <img src="${this.src}" alt="${this.alt}">
+                <h3 class="menu__item-subtitle">${this.title}</h3>
+                <div class="menu__item-descr">${this.descr}</div>
+                <div class="menu__item-divider"></div>
+                <div class="menu__item-price">
+                    <div class="menu__item-cost">Цена:</div>
+                    <div class="menu__item-total"><span>${this.price}</span> грн/день</div>
+                </div>
+            </div>
+            `;
+            this.perent.append(element);
+        }
+    }
     
 
-})
+    new block(
+        'img/tabs/vegy.jpg',
+        'vegy',
+        'Меню "Фитнес',
+        'Меню "Фитнес" - это новый подход к приготовлению блюд: больше свежих овощей и фруктов. Продукт активных и здоровых людей. Это абсолютно новый продукт с оптимальной ценой и высоким качеством!',
+        '9',
+        '.menu .container'
+
+    ).render();
+});

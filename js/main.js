@@ -309,4 +309,13 @@ window.addEventListener('DOMContentLoaded', () => {
     }
 
     createSleder();
+
+
+    //local stor
+    // localStorage.setItem('mumdee', 5);
+    // // localStorage.removeItem('mumdee');
+    // localStorage.clear();
+    // console.log(localStorage.getItem('mumdee'))
+
+    
 });

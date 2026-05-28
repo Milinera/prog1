@@ -47,7 +47,7 @@ window.addEventListener('DOMContentLoaded', () => {
 
 
     //timer
-    const deadLine = '2026-04-26';
+    const deadLine = '2026-10-26';
 
 
     function getTime(endtime) {
@@ -152,73 +152,6 @@ window.addEventListener('DOMContentLoaded', () => {
 
     window.addEventListener('scroll', showModalByScroll);
 
-    //class для карточек
-    // class Hz{
-    //     constructor (title, img, descr, price, alt) {
-    //         this.title = title;
-    //         this.img = img;
-    //         this.descr = descr;
-    //         this.price = price;
-    //         this.alt = alt;
-    //     }
-
-    //     createCard() {
-    //         const wrapper = document.createElement('div'),
-    //               img = document.createElement('img'),
-    //               h3 = document.createElement('h3'),
-    //               itemdescr = document.createElement('div'),
-    //               itemdivider = document.createElement('div'),
-    //               itemprice = document.createElement('div'),
-    //               cost = document.createElement('div'),
-    //               total = document.createElement('div'),
-    //               span = document.createElement('span');
-
-
-    //         wrapper.classList.add('menu__item')
-
-    //         img.alt = this.alt;
-    //         img.src = this.img;
-    //         wrapper.append(img)
-            
-    //         h3.classList.add('menu__item-subtitle');
-    //         h3.innerText = this.title;
-    //         wrapper.append(h3)
-
-    //         itemdescr.classList.add('menu__item-descr');
-    //         itemdescr.innerText = this.descr;
-    //         wrapper.append(itemdescr);
-
-    //         itemdivider.classList.add('menu__item-divider');
-    //         wrapper.append(itemdivider);
-
-    //         itemprice.classList.add('menu__item-price');
-    //         cost.classList.add('menu__item-cost');
-    //         cost.innerText = 'Цена:'
-    //         total.classList.add('menu__item-total');
-    //         total.innerText = this.price;
-    //         span.innerText = 'бр/день'
-
-    //         total.append(span);
-
-    //         itemprice.append(total);
-    //         itemprice.append(cost);
-
-    //         wrapper.append(itemprice);
-
-    //         return wrapper
-    //     }
-
-    //     addTo() {
-    //         const mainBlock = document.querySelector('.menu__field'),
-    //               container = mainBlock.querySelector('.container');
-
-    //         container.append(this.createCard());
-    //     }
-    // }
-    
-    // const first = new Hz('Меню "Фитнес"', 'img/tabs/vegy.jpg', 'Меню "Фитнес" - это новый подход к приготовлению блюд: больше свежих овощей и фруктов. Продукт активных и здоровых людей. Это абсолютно новый продукт с оптимальной ценой и высоким качеством!', '229', 'alt');
-    // first.addTo();
-
 
     class block {
         constructor(src, alt, title, descr, price, perent) {
@@ -253,17 +186,23 @@ window.addEventListener('DOMContentLoaded', () => {
             this.perent.append(element);
         }
     }
+
+    const getResource = async (url) => {
+        const res = await fetch(url);
+
+        if (!res.ok) {
+            throw new Error(`Could not fetch ${url}`);
+        }
+
+        return await res.json();
+    }
     
-
-    new block(
-        'img/tabs/vegy.jpg',
-        'vegy',
-        'Меню "Фитнес',
-        'Меню "Фитнес" - это новый подход к приготовлению блюд: больше свежих овощей и фруктов. Продукт активных и здоровых людей. Это абсолютно новый продукт с оптимальной ценой и высоким качеством!',
-        '9',
-        '.menu .container'
-
-    ).render();
+    getResource('http://react.milinera.site/db.json')
+    .then(data => {
+        data.menu.forEach(({img, altimg, title, descr, price}) => {
+            new block(img, altimg, title, descr, price, '.menu .container').render();
+        });
+    })
 
     //FORMS
     const forms = document.querySelectorAll('form');
@@ -273,10 +212,22 @@ window.addEventListener('DOMContentLoaded', () => {
         error: 'ошибка'
     };
     forms.forEach(item => {
-        postData(item);
+        fpostData(item);
     })
 
-    function postData(form) {
+    const postData = async (url, data) => {
+        const res = await fetch(url, {
+            method: "POST",
+            headers: {
+                'Content-type': 'application/json'
+            },
+            body: data
+        });
+
+        return await res.json();
+    }
+
+    function fpostData(form) {
         form.addEventListener('submit', (e) => {
             e.preventDefault();  //убирает стандартное поведение у sibmit form
 

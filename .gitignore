@@ -1,1 +1,5 @@
 .vscode/
+
+
+# Зависимости npm
+node_modules/

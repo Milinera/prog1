@@ -1,10 +1,10 @@
+import {calc} from './modules/calc.js';
+import {form} from './modules/form.js';
+import {modal} from './modules/modal.js';
+import {slider1} from './modules/slider1.js';
+import {tabs} from './modules/tabs.js';
+import {timer} from './modules/timer.js';
 window.addEventListener('DOMContentLoaded', () => {
-    const tabs = require('./modules/tabs'),
-          timer = require('./modules/timer'),
-          modal = require('./modules/modal'),
-          form = require('./modules/form'),
-          slider1 = require('./modules/slider1'),
-          calc = require('./modules/calc');
 
     tabs();
     timer();
@@ -12,7 +12,6 @@ window.addEventListener('DOMContentLoaded', () => {
     form();
     slider1();
     calc();
-
 });
 
 

@@ -60,4 +60,5 @@ function form() {
     }
 }
 
-module.exports = form;
+// module.exports = form;
+export {form}

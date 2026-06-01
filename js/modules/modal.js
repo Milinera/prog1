@@ -106,4 +106,6 @@ function modal() {
     })
 }
 
-module.exports = modal;
+// module.exports = modal;
+
+export {modal}

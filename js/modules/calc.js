@@ -116,4 +116,6 @@ function calc() {
     getInform('#age');
 }
 
-module.exports = calc;
+// module.exports = calc;
+
+export {calc};

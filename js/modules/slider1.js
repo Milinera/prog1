@@ -48,4 +48,6 @@ function slider1() {
     createSleder();
 }
 
-module.exports = slider1;
+// module.exports = slider1;
+
+export {slider1};
